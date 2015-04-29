@@ -40,6 +40,11 @@ curl --silent --location $JVM_COMMON_BUILDPACK | tar xzm -C /tmp/jvm-common --st
 #create the cache dir if it doesn't exist
 mkdir -p $CACHE_DIR
 
+mkdir -p $CACHE_DIR/.gems
+gem install -i $CACHE_DIR/.gems --no-rdoc sass
+export PATH=$PATH:$CACHE_DIR/.gems/bin
+export GEM_PATH=$GEM_PATH:$CACHE_DIR/.gems
+
 # install JDK
 javaVersion=$(detect_java_version ${BUILD_DIR})
 status_pending "Installing OpenJDK ${javaVersion}"
